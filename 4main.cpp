@@ -1,7 +1,7 @@
 #include <iostream> 
 #include "list.h"
 #include <Windows.h>
-//test//
+//notebook    1234test//
 class DebugList : public List {
 public:
     void Menu();
@@ -18,6 +18,7 @@ void DebugList::Menu() {
     std::cout << "6.Clear List\n";
     std::cout << "7.insert Item\n";
     std::cout << "0.Close program\n";
+    std::cout << "test\n";
 }
 
 void DebugList::Print() {
