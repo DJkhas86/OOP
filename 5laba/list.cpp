@@ -112,7 +112,9 @@ int List::getIndex(Item *itemadd){
 
 void List::insert(Item *itemadd,int n){
     if(!itemadd) return;
+
     itemadd->owner = this;
+    
     if(n == 0){
         if(head){
             itemadd->next = head;

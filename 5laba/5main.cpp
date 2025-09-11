@@ -1,6 +1,6 @@
 #include <iostream> 
 #include "list.hpp"
-
+#include <Windows.h>
 
 class DebugList : public List {
 public:
@@ -72,15 +72,10 @@ int main(){
                 std::cout << "Completle removed\n";
                 break;
             }
-            case 6:
+            case 7:
                 list.clear();
                 std::cout << "List Deleted";
                 break;
-            case 7:
-                std::cout << "Choose Index to Insert:";
-                std::cin >> choice;
-                list.insert(new Item(),choice);
-                std::cout << "Completle Inserted\n";
         }
     }
     return 0;
