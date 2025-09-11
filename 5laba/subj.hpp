@@ -30,7 +30,7 @@ class base : public Item{
 
 class singleIndicator : public base{
     public:
-        char figure[50];
+        char figure[20];
         int radiatingArea;
 
         singleIndicator();
@@ -54,7 +54,7 @@ class twoCOlorIndicator : public base{
 class signIndicator : public base {
     int amountSegments;
     bool signs;
-    char connectionDiagram[50];
+    char connectionDiagram[20];
 
     signIndicator();
 
