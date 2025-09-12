@@ -8,31 +8,31 @@ using namespace std;
 
 base::base(itemType t) : type(t){
     name[0] = '\0'; 
-    voltageDrop = NULL;
-    currentLimit = NULL;
-    waveLength = NULL;
-    radiationPower = NULL;
+    voltageDrop = 0;
+    currentLimit = 0;
+    waveLength = 0;
+    radiationPower = 0;
 }
 
 singleIndicator::singleIndicator() : base(itemType::itSingleIndicator){
     figure[0] = '\0';
-    radiatingArea = NULL;
+    radiatingArea = 0;
 }
 
 twoCOlorIndicator::twoCOlorIndicator() : base(itemType::itTwoColorIndicator){
-    secondWaveLength = NULL;
-    radPowOFsecondCrystal = NULL;
+    secondWaveLength = 0;
+    radPowOFsecondCrystal = 0;
 }
 
 signIndicator::signIndicator() : base(itemType::itSignIndicator){
-    amountSegments = NULL;
+    amountSegments = 0;
     signs = false;
     connectionDiagram[0] = '\0';
 }
 
 matrixIndicator::matrixIndicator() : base(itemType::itMatrixIndicator){
-    strings = NULL;
-    column = NULL;
+    strings = 0;
+    column = 0;
 }
 
 void singleIndicator::input(){
