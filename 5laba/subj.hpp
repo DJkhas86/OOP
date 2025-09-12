@@ -37,7 +37,7 @@ class singleIndicator : public base{
 };
 
 class twoCOlorIndicator : public base{
-    private:
+    public:
         float secondWaveLength;
         float radPowOFsecondCrystal;
         twoCOlorIndicator();
@@ -46,16 +46,17 @@ class twoCOlorIndicator : public base{
 };
 
 class signIndicator : public base {
-    int amountSegments;
-    bool signs;
-    char connectionDiagram[20];
-    signIndicator();
-    void input() override;
-    void print() override;
+    public:
+        int amountSegments;
+        bool signs;
+        char connectionDiagram[20];
+        signIndicator();
+        void input() override;
+        void print() override;
 };
 
 class matrixIndicator : public base{
-    private :
+    public:
         int strings;
         int column;
         matrixIndicator();

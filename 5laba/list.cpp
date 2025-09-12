@@ -1,8 +1,10 @@
 #include "list.hpp"
 #include <iostream>
 
-Item::Item() : next(nullptr), prev(nullptr), owner(nullptr) {
-
+Item::Item(){
+    next = (nullptr);
+    prev = (nullptr);
+    owner = (nullptr);
 }
 
 Item::~Item() {
@@ -11,7 +13,10 @@ Item::~Item() {
     }
 }
 
-List::List() : head(nullptr), tail(nullptr){}
+List::List(){
+    head = (nullptr);
+    tail = (nullptr);
+}
 
 List::~List() {
     clear();

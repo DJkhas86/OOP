@@ -1,4 +1,3 @@
-#include "list.hpp"
 #include "subj.hpp"
 #include <iostream>
 #include <limits>
