@@ -1,11 +1,11 @@
 #include <iostream> 
 #include "list.hpp"
-
+#include <Windows.h>
 
 class DebugList : public List {
-public:
-    void Menu();
-    void Print();
+    public:
+        void Menu();
+        void Print();
 };
 
 void DebugList::Menu() {
