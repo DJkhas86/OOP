@@ -20,7 +20,7 @@ class base : public Item{
         float waveLength;
         float radiationPower;
         base(itemType t);
-        virtual ~base();
+        virtual ~base(){}
         virtual void input();
         virtual void print();
         virtual float getWaveLength(){return waveLength;}

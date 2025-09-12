@@ -12,7 +12,7 @@ base::base(itemType t) : type(t){
     waveLength = 0;
     radiationPower = 0;
 }
-
+base::~base(){}
 singleIndicator::singleIndicator() : base(itemType::itSingleIndicator){
     figure[0] = '\0';
     radiatingArea = 0;
@@ -32,6 +32,25 @@ signIndicator::signIndicator() : base(itemType::itSignIndicator){
 matrixIndicator::matrixIndicator() : base(itemType::itMatrixIndicator){
     strings = 0;
     column = 0;
+}
+
+void base::input(){
+    switch (type) {
+        case itemType::itSingleIndicator:
+            static_cast<singleIndicator*>(this)->input();
+            break;
+        case itemType::itTwoColorIndicator:
+            static_cast<twoCOlorIndicator*>(this)->input();
+            break;
+        case itemType::itSignIndicator:
+            static_cast<signIndicator*>(this)->input();
+            break;
+        case itemType::itMatrixIndicator:
+            static_cast<matrixIndicator*>(this)->input();
+            break;
+        default:
+            cout << "Неизвестный тип объекта!" << endl;
+    }
 }
 
 void singleIndicator::input(){
