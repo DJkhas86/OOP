@@ -47,7 +47,7 @@ Item* List::getItem(int n){
     Item *temp = head;
     int i = 0;
     while(temp && i < n){
-        head = head->next;
+        temp = temp->next;
         i++;
     }
     return temp;
@@ -67,6 +67,7 @@ Item* List::removeItem(int n){
         }
     }
     else if ( item == tail){
+        std::cout << __FUNCTION__ << " " << __LINE__ << std::endl;
         tail = item->Prev();
         if(tail){
             tail->next = nullptr;
@@ -76,13 +77,22 @@ Item* List::removeItem(int n){
             item->Next()->prev = item->Prev();
         }
     }
+    else
+    {
+        std::cout << __FUNCTION__ << " " << __LINE__ << std::endl;
+        item->Prev()->next = item->Next();
+        item->Next()->prev = item->Prev();
+    }
     item->next = nullptr;
     item->prev = nullptr;
     item->owner = nullptr;
+
+    return item;
 }
 
 void List::Delete(int n){
-    if(n < 0) throw std::out_of_range("Index is out of range.");
+    // if(n < 0) throw std::out_of_range("Index is out of range.");
+    if(n < 0) return;
     Item* item = getItem(n);
     if (!item) return;
     delete item;

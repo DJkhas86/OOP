@@ -66,9 +66,9 @@ int main(){
                 break;
             }
             case 5:{
-                std::cout << "Choose Index to Remove:";
+                std::cout << "Choose Index to Delete:";
                 std::cin >> choice;
-                list.removeItem(choice);
+                list.Delete(choice);
                 std::cout << "Completle removed\n";
                 break;
             }
