@@ -6,11 +6,10 @@
 class List;
 
 class Item{
-    private:
+    public:
         Item* next;
         Item* prev;
         List* owner;
-    public:
         Item();
         ~Item();
         Item* Next() const{return next;}
@@ -20,10 +19,9 @@ class Item{
 };
 
 class List{
-    private:
+    public:
         Item* head;
         Item* tail;
-    public:
         List();
         ~List();
         void add(Item *itemadd);

@@ -11,8 +11,9 @@ base::base(itemType t) : type(t){
     currentLimit = 0;
     waveLength = 0;
     radiationPower = 0;
+    summarPower = currentLimit * radiationPower;
 }
-base::~base(){}
+// base::~base(){}
 singleIndicator::singleIndicator() : base(itemType::itSingleIndicator){
     figure[0] = '\0';
     radiatingArea = 0;
@@ -71,6 +72,7 @@ void twoCOlorIndicator::input(){
     radiationPower = SafeInputFloat("Enter Radiation Power: ");
     secondWaveLength = SafeInputFloat("Enter secondWaveLength: ");
     radPowOFsecondCrystal = SafeInputFloat("Enter radPowOFsecondCrystal: ");
+    summarPower = summarPower + (currentLimit * radPowOFsecondCrystal);
 }
 
 void signIndicator::input(){
@@ -88,6 +90,7 @@ void signIndicator::input(){
         signs = false;
     }
     SafeInputString("Enter connection Diagram: ", connectionDiagram);
+    summarPower = summarPower * amountSegments;
 }
 
 void matrixIndicator::input(){
@@ -98,6 +101,7 @@ void matrixIndicator::input(){
     radiationPower = SafeInputFloat("Enter Radiation Power: ");
     strings = SafeInputInt("Enter strings : ",0,10);
     column = SafeInputInt("Enter column : ",0,10);
+    summarPower = summarPower *(column * strings);
 }
 
 void base::print(){
@@ -164,6 +168,64 @@ void matrixIndicator::print(){
     cout << "column: " << column << endl;
 }
 
+void subjList::printList(){
+    if(!head){
+        cout << "ist is empty" << endl;
+    }
+    else{
+        Item *temp = head;
+        while(temp){
+            static_cast<base*>(temp)->print();
+            cout << endl;
+            temp = temp->next;
+        } 
+    }
+} 
+
+int subjList::compareWave(float obj1,float obj2){
+    if(obj1 >  obj2){
+        return 1;
+    }
+    else{
+        return 0;
+    }
+}
+
+void subjList::sortList(){
+    if (!this->head){
+        return;
+    }    
+    int i = 0,j = 1,n = this->count();
+    Item *temp = this->head;
+    base *a = static_cast<base*>(temp);
+    base *b = static_cast<base*>(temp->next);
+    for(i = 0;i<n;i++){
+        for(j=i+1;j<n;j++){
+            if(compareWave(a->summarPower,b->summarPower)){
+            }
+            b = static_cast<base*>(b->next);
+        }
+        a = static_cast<base*>(a->next);
+    }
+}
+
+void subjList::found(){
+    int min = 0;
+    int max = 0;
+    int n = this->count();
+    cout << "Enter Min:" << endl;
+    std::cin >> min;
+    cout << "Enter Max:" << endl;
+    std::cin >> max;
+    Item *temp = this->head;
+    base *a = static_cast<base*>(temp);
+    for(int i = 0;i<n;i++){
+        if(a->summarPower >= min && a->summarPower <= max){
+            a->print();
+        }
+        a = static_cast<base*>(a->next);
+    }
+}
 
 int SafeInputInt(const char *prompt, int minValue, int maxValue) {
     int value;

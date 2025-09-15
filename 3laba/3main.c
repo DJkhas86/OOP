@@ -1,7 +1,7 @@
 #include "3interface.h"
 #include "3subj.h"
 #include <stdio.h>
-
+// расчет мощности виртуальной функцией и поиск от и до//
 int main(){
     int p = 1, choise = 0,poisk = 0,amount = 0;
     list *listAddress= malloc(sizeof(item));

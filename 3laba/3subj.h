@@ -23,6 +23,7 @@ typedef struct Base{
     float currentLimit;
     float waveLength;
     float radiationPower;
+    float summarPower;
 
 }Base;
 //единичных индикаторов
@@ -59,6 +60,7 @@ void print(Base *obj);
 void printList(list *list);
 void sortList(list *list);
 int compareWave(Base *obj1,Base *obj2);
+void found(list *list);
 
 
 // Безопасный ввод целого числа с проверкой

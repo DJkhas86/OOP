@@ -80,6 +80,10 @@ Item* List::removeItem(int n){
             item->Prev()->next = item->Next();
             item->Next()->prev = item->Prev();
         }
+    }else
+    {
+        item->Prev()->next = item->Next();
+        item->Next()->prev = item->Prev();
     }
     item->next = nullptr;
     item->prev = nullptr;

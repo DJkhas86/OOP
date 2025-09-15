@@ -19,6 +19,7 @@ class base : public Item{
         float currentLimit;
         float waveLength;
         float radiationPower;
+        float summarPower;
         base(itemType t);
         virtual ~base(){}
         virtual void input();
@@ -72,7 +73,8 @@ class subjList : public List{
         ~subjList();
         void printList();
         void sortList();
-        int compareWave();
+        int compareWave(float obj1,float obj2);
+        void found();
 
 };
 

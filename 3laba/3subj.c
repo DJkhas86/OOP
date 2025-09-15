@@ -1,5 +1,6 @@
 #include "3subj.h"
 
+
 char *typeName[] = {
     "Empty","SingleIndicator","TwoColorIndicator","SignIndicator","MatrixIndicator"
 };
@@ -31,40 +32,44 @@ Base* createObject(ItemType type){
 
 void input(Base *obj){
     if (!obj) return;
-    SafeInputString("Введите название: ", &obj->name, 50);
+    SafeInputString("Enter name: ", &obj->name, 50);
     SafeInputFloat("Enter Voltage Drop: ");
     obj->currentLimit = SafeInputFloat("Enter Current Limit: ");
     obj->waveLength = SafeInputFloat("Enter Wave Length: ");
     obj->radiationPower = SafeInputFloat("Enter Radiation Power: ");
+    obj->summarPower = currentLimit * radiationPower;
     // Ввод специфических данных
     switch (obj->Item){
         case itSingleIndicator: {
             singleIndicator *si = (singleIndicator *)obj;
             SafeInputString("Enter figure: ", si->figure, 50);
-            SafeInputint("Enter Radiation Limit: ", si->radiatingArea,1000);
+            si->radiatingArea = SafeInputint("Enter Radiation Limit: ",1000);
             break;
         }
         case itTwoColorIndicator: {
             twoCOlorIndicator *tci = (twoCOlorIndicator *)obj;
             SafeInputFloat("Enter Wave Length: ");
             SafeInputFloat("Enter Radiation Power Of Second Crystal: ");
+            tci->summarPower = tci->summarPower + (tci->currentLimit * tci->radPowOFsecondCrystal);
             break;
         }
         case itSignIndicator: {
             signIndicator *signI = (signIndicator *)obj;
             signI->amountSegments = SafeInputInt("Enter Amount Segments: ", 0, 100);
             signI->signs = SafeInputInt("Enter Signs (1 - yes, 0 - no): ", 0, 1);
-            SafeInputString("Enter Type Of Connection (anode, cathode, separate): ", signI->connectionDiagram, 8);
+            SafeInputString("Enter Type Of Connection (anode, cathode, separate): ", &signI->connectionDiagram, 8);
+            signI->summarPower = signI->summarPower * signI->amountSegments;
             break;
         }
         case itMatrixIndicator: {
             matrixIndicator *mi = (matrixIndicator *)obj;
             mi->strings = SafeInputInt("Enter Amount Strings: ", 0, 100);
             mi->column = SafeInputInt("Enter Amount Column:", 0, 100);
+            mi->summarPower = mi->summarPower *(mi->column * mi->strings);
             break;
         }
         default:
-            printf("Неизвестный тип объекта!\n");
+            printf("undefined type!\n");
     }
 
 }
@@ -76,7 +81,8 @@ void print(Base *obj){
     printf("Current Limit: %f\n", obj->currentLimit);
     printf("Wave Length: %f\n", obj->waveLength);
     printf("Radiation Power: %f\n", obj->radiationPower);
-
+    printf("summar Power: %f\n", obj->summarPower);
+    
     switch (obj->Item) {
         case itSingleIndicator: {
             singleIndicator *si = (singleIndicator *)obj;
@@ -149,6 +155,18 @@ void sortList(list *listadd){
     }
 }
 
+void found(list *list){
+    int min,max,i;
+    printf("Enter Min edge");
+    scanf("%d",&min);
+    printf("Enter Max edge");
+    scanf("%d",&max);
+    for(i = 0;i < count(list)){
+        if(getItem(i)->summarPower >= min && getItem(i)->summarPower <= max){
+            printf("Item: %p\tNext: %p\tPrev: %p\n", getItem(i), getItem(i)->next, getItem(i)->prev);
+        }
+    }
+}
 
 
 
