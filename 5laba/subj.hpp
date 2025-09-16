@@ -66,8 +66,6 @@ class matrixIndicator : public base{
 };
 
 class subjList : public List{
-    private:
-
     public:
         subjList();
         ~subjList();
