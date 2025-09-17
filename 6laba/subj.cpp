@@ -5,7 +5,7 @@
 
 using namespace std;
 
-base::base(){
+Base::Base(){
     name[0] = '\0'; 
     voltageDrop = 0;
     currentLimit = 0;
@@ -36,18 +36,19 @@ matrixIndicator::matrixIndicator(){
 }
 
 void singleIndicator::input(){
-    SafeInputString("Enter name: ", name);
+    SafeInputString("Enter name: ", name,4);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");
     currentLimit = SafeInputFloat("Enter Current Limit: ");
     waveLength = SafeInputFloat("Enter Wave Length: ");
     radiationPower = SafeInputFloat("Enter Radiation Power: ");
 
-    SafeInputString("Enter Figure: ", figure);
+    summarPower = currentLimit * radiationPower;
+    SafeInputString("Enter Figure: ", figure,20);
     radiatingArea = SafeInputInt("Enter Radiation area: ",0,1000);
 }
 
 void twoCOlorIndicator::input(){
-    SafeInputString("Enter name: ", name);
+    SafeInputString("Enter name: ", name,4);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");
     currentLimit = SafeInputFloat("Enter Current Limit: ");
     waveLength = SafeInputFloat("Enter Wave Length: ");
@@ -56,12 +57,13 @@ void twoCOlorIndicator::input(){
     secondWaveLength = SafeInputFloat("Enter secondWaveLength: ");
     radPowOFsecondCrystal = SafeInputFloat("Enter radPowOFsecondCrystal: ");
 
+    summarPower = currentLimit * radiationPower;
     summarPower = summarPower + (currentLimit * radPowOFsecondCrystal);
 }
 
 void signIndicator::input(){
     int buff;
-    SafeInputString("Enter name: ", name);
+    SafeInputString("Enter name: ", name,4);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");
     currentLimit = SafeInputFloat("Enter Current Limit: ");
     waveLength = SafeInputFloat("Enter Wave Length: ");
@@ -69,18 +71,19 @@ void signIndicator::input(){
 
     amountSegments = SafeInputInt("Enter amount Segments : ",0,10);
     buff = SafeInputInt("Enter signs(0 or 1): ",0,1);
-    if(buff){  
+    if(buff == 1){  
         signs = true;
     }else{
         signs = false;
     }
-    SafeInputString("Enter connection Diagram: ", connectionDiagram);
+    SafeInputString("Enter connection Diagram: ", connectionDiagram,20);
 
+    summarPower = currentLimit * radiationPower;
     summarPower = summarPower * amountSegments;
 }
 
 void matrixIndicator::input(){
-    SafeInputString("Enter name: ", name);
+    SafeInputString("Enter name: ", name,4);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");
     currentLimit = SafeInputFloat("Enter Current Limit: ");
     waveLength = SafeInputFloat("Enter Wave Length: ");
@@ -89,7 +92,8 @@ void matrixIndicator::input(){
     strings = SafeInputInt("Enter strings : ",0,10);
     column = SafeInputInt("Enter column : ",0,10);
 
-    summarPower = summarPower *(column * strings);
+    summarPower = currentLimit * radiationPower;
+    summarPower = summarPower * (column * strings);
 }
 
 
@@ -150,7 +154,7 @@ void subjList::printList(){
     else{
         Item *temp = head;
         while(temp){
-            static_cast<base*>(temp)->print();
+            static_cast<Base*>(temp)->print();
             cout << endl;
             temp = temp->next;
         } 
@@ -172,15 +176,19 @@ void subjList::sortList(){
     }    
     int i = 0,j = 1,n = this->count();
     Item *temp = this->head;
-    base *a = static_cast<base*>(temp);
-    base *b = static_cast<base*>(temp->next);
+    Base *a = static_cast<Base*>(temp);
+    Base *b = static_cast<Base*>(temp->next);
     for(i = 0;i<n;i++){
         for(j=i+1;j<n;j++){
-            if(compareWave(a->summarPower,b->summarPower)){
+            if(compareWave(a->waveLength,b->waveLength)){
+                temp->next->prev = temp->prev;
+                temp->prev = temp->next;
+                temp->next = temp->next->next;
+                temp->prev->next = temp;
             }
-            b = static_cast<base*>(b->next);
+            b = static_cast<Base*>(b->next);
         }
-        a = static_cast<base*>(a->next);
+        a = static_cast<Base*>(a->next);
     }
 }
 
@@ -191,12 +199,12 @@ void subjList::found(){
     min = SafeInputFloat("Enter Min:");
     max = SafeInputFloat("Enter Max:");
     Item *temp = this->head;
-    base *a = static_cast<base*>(temp);
+    Base *a = static_cast<Base*>(temp);
     for(int i = 0;i<n;i++){
         if(a->summarPower >= min && a->summarPower <= max){
             a->print();
         }
-        a = static_cast<base*>(a->next);
+        a = static_cast<Base*>(a->next);
     }
 }
 
@@ -208,7 +216,7 @@ int SafeInputInt(const char *prompt, int minValue, int maxValue) {
             cin.ignore();
             return value;
         }
-        cout << "Ошибка: Введите число от " << minValue << " до " << maxValue << "!" << endl;
+        cout << "ERROR: ENTER  NUMBER from  " << minValue << " to " << maxValue << "!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
@@ -222,15 +230,14 @@ float SafeInputFloat(const char *prompt) {
             cin.ignore();
             return value;
         }
-        cout << "Ошибка: Введите корректное число!" << endl;
+        cout << "ERROR: ENTER COORECT NUMBER!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
 
-void SafeInputString(const char *prompt, char *destination) {
-    char buffer[20];
-    int maxLength = 20;
+void SafeInputString(const char *prompt, char *destination, int maxLength) {
+    char buffer[256];
     while (true) {
         cout << prompt;
         if (cin.getline(buffer, sizeof(buffer))) {

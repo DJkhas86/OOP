@@ -10,7 +10,7 @@ enum class itemType {
     itMatrixIndicator
 };
 
-class base : public Item{
+class Base : public Item{
     public :
         char name[3];
         float voltageDrop;
@@ -18,14 +18,15 @@ class base : public Item{
         float waveLength;
         float radiationPower;
         float summarPower;
-        base();
-        virtual ~base(){};
 
-        virtual void input();
+        Base();
+        virtual ~Base() = default;
+
+        virtual void input() = 0;
         virtual void print() const = 0;
         virtual itemType getItemType() const = 0;
 };
-class singleIndicator : public base{
+class singleIndicator : public Base{
     public:
         char figure[20];
         int radiatingArea;
@@ -37,7 +38,7 @@ class singleIndicator : public base{
 
 };
 
-class twoCOlorIndicator : public base{
+class twoCOlorIndicator : public Base{
     public:
         float secondWaveLength;
         float radPowOFsecondCrystal;
@@ -48,7 +49,7 @@ class twoCOlorIndicator : public base{
         itemType getItemType() const override { return itemType::itTwoColorIndicator; }
 };
 
-class signIndicator : public base {
+class signIndicator : public Base {
     public:
         int amountSegments;
         bool signs;
@@ -60,7 +61,7 @@ class signIndicator : public base {
         itemType getItemType() const override { return itemType::itSignIndicator; }
 };
 
-class matrixIndicator : public base{
+class matrixIndicator : public Base{
     public:
         int strings;
         int column;
@@ -83,6 +84,6 @@ class subjList : public List{
 
 int SafeInputInt(const char *prompt, int minValue, int maxValue);
 float SafeInputFloat(const char *prompt);
-void SafeInputString(const char *prompt, char *destination);
+void SafeInputString(const char *prompt, char *destination, int maxLength);
 
 #endif
