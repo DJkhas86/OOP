@@ -1,7 +1,7 @@
 #include <iostream> 
 #include "subj.hpp"
 #include <Windows.h>
-
+#include <string>
 int main(){
     subjList list;
     int choice,amount = 0;

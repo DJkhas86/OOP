@@ -55,17 +55,17 @@ void base::input(){
 }
 
 void singleIndicator::input(){
-    SafeInputString("Enter name: ", name);
+    SafeInputString("Enter name: ", &name,3);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");
     currentLimit = SafeInputFloat("Enter Current Limit: ");
     waveLength = SafeInputFloat("Enter Wave Length: ");
     radiationPower = SafeInputFloat("Enter Radiation Power: ");
-    SafeInputString("Enter Figure: ", figure);
+    SafeInputString("Enter Figure: ", &figure,10);
     radiatingArea = SafeInputInt("Enter Radiation area: ",0,1000);
 }
 
 void twoCOlorIndicator::input(){
-    SafeInputString("Enter name: ", name);
+    SafeInputString("Enter name: ", &name,3);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");
     currentLimit = SafeInputFloat("Enter Current Limit: ");
     waveLength = SafeInputFloat("Enter Wave Length: ");
@@ -77,7 +77,7 @@ void twoCOlorIndicator::input(){
 
 void signIndicator::input(){
     int buff;
-    SafeInputString("Enter name: ", name);
+    SafeInputString("Enter name: ", &name,3);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");
     currentLimit = SafeInputFloat("Enter Current Limit: ");
     waveLength = SafeInputFloat("Enter Wave Length: ");
@@ -89,12 +89,12 @@ void signIndicator::input(){
     }else{
         signs = false;
     }
-    SafeInputString("Enter connection Diagram: ", connectionDiagram);
+    SafeInputString("Enter connection Diagram: ", &connectionDiagram,10);
     summarPower = summarPower * amountSegments;
 }
 
 void matrixIndicator::input(){
-    SafeInputString("Enter name: ", name);
+    SafeInputString("Enter name: ", &name,3);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");
     currentLimit = SafeInputFloat("Enter Current Limit: ");
     waveLength = SafeInputFloat("Enter Wave Length: ");
@@ -192,32 +192,49 @@ int subjList::compareWave(float obj1,float obj2){
 }
 
 void subjList::sortList(){
-    if (!this->head){
-        return;
-    }    
-    int i = 0,j = 1,n = this->count();
-    Item *temp = this->head;
-    base *a = static_cast<base*>(temp);
-    base *b = static_cast<base*>(temp->next);
-    for(i = 0;i<n;i++){
-        for(j=i+1;j<n;j++){
-            if(compareWave(a->summarPower,b->summarPower)){
+    if (!head) return;
+
+    bool swapped;
+    do {
+        swapped = false;
+        Item *temp = head;
+
+        while (temp && temp->next) {
+            base *a = static_cast<base*>(temp);
+            base *b = static_cast<base*>(temp->next);
+
+            if (compareWave(a->waveLength,b->waveLength) > 0) {
+                if (temp->prev) {
+                    temp->prev->next = temp->next;
+                } else {
+                    head = temp->next;
+                }
+
+                if (temp->next->next) {
+                    temp->next->next->prev = temp;
+                } else {
+                    tail = temp;
+                }
+                temp->next->prev = temp->prev;
+                temp->prev = temp->next;
+                temp->next = temp->next->next;
+                temp->prev->next = temp;
+
+                swapped = true;
+            } else {
+                temp = temp->next;
             }
-            b = static_cast<base*>(b->next);
         }
-        a = static_cast<base*>(a->next);
-    }
+    } while (swapped);
 }
 
 void subjList::found(){
     int min = 0;
     int max = 0;
     int n = this->count();
-    cout << "Enter Min:" << endl;
-    std::cin >> min;
-    cout << "Enter Max:" << endl;
-    std::cin >> max;
-    Item *temp = this->head;
+    min = SafeInputFloat("Enter Min:");
+    max = SafeInputFloat("Enter Max:");
+    Item *temp = head;
     base *a = static_cast<base*>(temp);
     for(int i = 0;i<n;i++){
         if(a->summarPower >= min && a->summarPower <= max){
@@ -225,9 +242,10 @@ void subjList::found(){
         }
         a = static_cast<base*>(a->next);
     }
+    
 }
 
-int SafeInputInt(const char *prompt, int minValue, int maxValue) {
+int SafeInputInt(string prompt, int minValue, int maxValue) {
     int value;
     while (true) {
         cout << prompt;
@@ -235,13 +253,13 @@ int SafeInputInt(const char *prompt, int minValue, int maxValue) {
             cin.ignore();
             return value;
         }
-        cout << "Ошибка: Введите число от " << minValue << " до " << maxValue << "!" << endl;
+        cout << "ERROR: ENTER  NUMBER from  " << minValue << " to " << maxValue << "!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
 
-float SafeInputFloat(const char *prompt) {
+float SafeInputFloat(string prompt) {
     float value;
     while (true) {
         cout << prompt;
@@ -249,20 +267,21 @@ float SafeInputFloat(const char *prompt) {
             cin.ignore();
             return value;
         }
-        cout << "Ошибка: Введите корректное число!" << endl;
+        cout << "ERROR: ENTER COORECT NUMBER!" << endl;
         cin.clear();
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
     }
 }
 
-void SafeInputString(const char *prompt, char *destination) {
-    char buffer[20];
-    int maxLength = 20;
+void SafeInputString(string prompt, string *destination, int maxLength) {
+    std::string buffer;
     while (true) {
         cout << prompt;
-        if (cin.getline(buffer, sizeof(buffer))) {
-            if (strlen(buffer) <= (size_t)maxLength) {
-                strncpy(destination, buffer, maxLength);
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        if (getline(cin, buffer)) {
+            if (buffer.length() <= maxLength) {
+                *destination = buffer;
                 return;
             }
             cout << "Ошибка: Максимальная длина - " << maxLength << " символов!" << endl;

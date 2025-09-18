@@ -2,6 +2,7 @@
 #define SUBJ_HPP
 
 #include "list.hpp"
+#include <string>
 enum class itemType {
     itNone,
     itSingleIndicator,
@@ -12,7 +13,7 @@ enum class itemType {
 
 class Base : public Item{
     public :
-        char name[3];
+        std::string name;
         float voltageDrop;
         float currentLimit;
         float waveLength;
@@ -28,7 +29,7 @@ class Base : public Item{
 };
 class singleIndicator : public Base{
     public:
-        char figure[20];
+        std::string figure;
         int radiatingArea;
         singleIndicator();
 
@@ -53,7 +54,7 @@ class signIndicator : public Base {
     public:
         int amountSegments;
         bool signs;
-        char connectionDiagram[20];
+        std::string connectionDiagram;
         signIndicator();
 
         void input() override;
@@ -82,8 +83,8 @@ class subjList : public List{
 };
 
 
-int SafeInputInt(const char *prompt, int minValue, int maxValue);
-float SafeInputFloat(const char *prompt);
-void SafeInputString(const char *prompt, char *destination, int maxLength);
+int SafeInputInt(std::string prompt, int minValue, int maxValue);
+float SafeInputFloat(std::string prompt);
+void SafeInputString(std::string prompt, std::string *destination, int maxLength);
 
 #endif
