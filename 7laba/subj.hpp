@@ -25,7 +25,17 @@ class Base : public Item{
 
         virtual void input() = 0;
         virtual void print() const = 0;
+        virtual int compareWave(const Base* other);
         virtual itemType getItemType() const = 0;
+        virtual int getWaveLength() const { return waveLength; }
+        virtual int getSummarPower() const { return summarPower; }
+
+        bool operator>(const Base& other) const;
+        bool operator<(const Base& other) const;
+
+        bool operator>=(int value) const;
+        bool operator<=(int value) const;
+        bool operator==(int value) const;
 };
 class singleIndicator : public Base{
     public:
@@ -77,9 +87,9 @@ class subjList : public List{
     public:
         void printList();
         void sortList();
-        int compareWave(float obj1,float obj2);
         void found();
-        
+        Base& operator[](int index);
+        const Base& operator[](int index) const; 
 
 };
 
