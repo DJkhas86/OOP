@@ -72,9 +72,14 @@ int main(){
                 std::cout << "Completle removed\n";
                 break;
             }
-            case 7:
+            case 6:
                 list.clear();
                 std::cout << "List Deleted";
+                break;
+            case 7:
+                std::cout << "Choose Index to Insert:";
+                std::cin >> choice;
+                list.insert(new Item(),choice);
                 break;
         }
     }

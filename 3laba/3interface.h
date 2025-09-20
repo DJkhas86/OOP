@@ -2,7 +2,7 @@
 #define INTERFACE_H
 
 #include <stdlib.h>
-
+#include <string.h>
 typedef struct item{
     struct item *prev;
     struct item *next;

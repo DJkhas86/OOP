@@ -52,7 +52,7 @@ Item* List::getItem(int n){
     Item *temp = head;
     int i = 0;
     while(temp && i < n){
-        head = head->next;
+        temp = temp->next;
         i++;
     }
     return temp;
@@ -88,6 +88,8 @@ Item* List::removeItem(int n){
     item->next = nullptr;
     item->prev = nullptr;
     item->owner = nullptr;
+
+    return item;
 }
 
 void List::Delete(int n){
@@ -121,9 +123,7 @@ int List::getIndex(Item *itemadd){
 
 void List::insert(Item *itemadd,int n){
     if(!itemadd) return;
-
     itemadd->owner = this;
-    
     if(n == 0){
         if(head){
             itemadd->next = head;

@@ -81,6 +81,7 @@ int main(){
                 std::cin >> choice;
                 list.insert(new Item(),choice);
                 std::cout << "Completle Inserted\n";
+                break;
         }
     }
     return 0;
