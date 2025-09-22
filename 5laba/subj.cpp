@@ -5,6 +5,18 @@
 
 using namespace std;
 
+void subjList::menu() {
+    std::cout << "Menu:\n";
+    std::cout << "1.Add random Item\n";
+    std::cout << "2.Add control Item\n";
+    std::cout << "3.Print all\n";
+    std::cout << "4.Sort by wave length\n";
+    std::cout << "5.Found by summar power\n";
+    std::cout << "6.delete all\n";
+    std::cout << "0.Close program\n";
+
+}
+
 base::base(itemType t) : type(t){
     name[0] = '\0'; 
     voltageDrop = 0;

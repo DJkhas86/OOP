@@ -96,7 +96,56 @@ void matrixIndicator::input(){
     summarPower = summarPower * (column * strings);
 }
 
+void singleIndicator::inputrand(){
+    name = to_string(rand() % 11);
+    voltageDrop = rand()%101;
+    currentLimit = rand()%101;
+    waveLength = rand()%101;
+    radiationPower = rand()%101;
+    summarPower = currentLimit * radiationPower;
+    figure = to_string(rand() % 3);
+    radiatingArea = rand()%101;
+}
 
+void twoCOlorIndicator::inputrand(){
+    name = to_string(rand() % 11);
+    voltageDrop = rand()%101;
+    currentLimit = rand()%101;
+    waveLength = rand()%101;
+    radiationPower = rand()%101;
+    summarPower = currentLimit * radiationPower;
+    waveLength = rand()%101;
+    radPowOFsecondCrystal = rand()%101;
+}
+
+void signIndicator::inputrand(){
+    int buff;
+    name = to_string(rand() % 11);
+    voltageDrop = rand()%101;
+    currentLimit = rand()%101;
+    waveLength = rand()%101;
+    radiationPower = rand()%101;
+    summarPower = currentLimit * radiationPower;
+    buff = rand()%2;
+    amountSegments = rand()%101;
+    connectionDiagram =to_string(rand() % 5);
+    if(buff){  
+        signs = true;
+    }else{
+        signs = false;
+    }
+}
+
+void matrixIndicator::inputrand(){
+    name = to_string(rand() % 11);
+    voltageDrop = rand()%101;
+    currentLimit = rand()%101;
+    waveLength = rand()%101;
+    radiationPower = rand()%101;
+    summarPower = currentLimit * radiationPower;
+    strings = rand()%101;
+    column = rand()%101;
+}
 
 void singleIndicator::print() const{
     cout << "Name: " << name << endl;

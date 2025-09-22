@@ -23,6 +23,7 @@ class Base : public Item{
         Base();
         virtual ~Base() = default;
 
+        virtual void inputrand() = 0;
         virtual void input() = 0;
         virtual void print() const = 0;
         virtual itemType getItemType() const = 0;
@@ -33,6 +34,7 @@ class singleIndicator : public Base{
         int radiatingArea;
         singleIndicator();
 
+        void inputrand() override;
         void input() override;
         void print() const override;
         itemType getItemType() const override { return itemType::itSingleIndicator; }
@@ -44,7 +46,8 @@ class twoCOlorIndicator : public Base{
         float secondWaveLength;
         float radPowOFsecondCrystal;
         twoCOlorIndicator();
-
+        
+        void inputrand() override;
         void input() override;
         void print() const override;
         itemType getItemType() const override { return itemType::itTwoColorIndicator; }
@@ -57,6 +60,7 @@ class signIndicator : public Base {
         std::string connectionDiagram;
         signIndicator();
 
+        void inputrand() override;
         void input() override;
         void print() const override;
         itemType getItemType() const override { return itemType::itSignIndicator; }
@@ -68,6 +72,7 @@ class matrixIndicator : public Base{
         int column;
         matrixIndicator();
 
+        void inputrand() override;
         void input() override;
         void print() const override;
         itemType getItemType() const override { return itemType::itMatrixIndicator; }

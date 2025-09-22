@@ -73,8 +73,7 @@ class matrixIndicator : public base{
 
 class subjList : public List{
     public:
-        subjList();
-        ~subjList();
+        void menu();
         void printList();
         void sortList();
         int compareWave(float obj1,float obj2);

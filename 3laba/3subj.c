@@ -176,22 +176,46 @@ int compareWave(Base *obj1,Base *obj2){
 }
 
 void sortList(list *listadd){
-    if (!listadd || !listadd->head) return;
-    int i = 0,j = 1,n = count(listadd);
-    list *buffl = listadd;
-    Base *temp1 = NULL;
-    Base *temp2 = NULL;
-    Base *bufft = NULL;
-    for(i = 0;i<n;i++){
-        temp1 = (Base *)getItem(listadd,i);
-        for(j=i+1;j<n;j++){
-            temp2 = (Base *)getItem(listadd,j);
-            if(compareWave(temp1,temp2)){
-                *getItem(listadd,j) = temp1->base;
-                *getItem(listadd,i) = temp2->base;
-            }   
+ if (!listadd || !listadd->head) return; 
+
+    int swapped;
+    do {
+        swapped = 0;
+        item *current = listadd->head;
+
+        while (current && current->next) {
+            Base *a = (Base *)current;
+            Base *b = (Base *)current->next;
+
+            // Сравнение имен по локали
+            if (compareWave(a,b) > 0) {
+                item *next = current->next;
+
+                current->next = next->next;
+                if (next->next) {
+                    next->next->prev = current;
+                }
+
+                next->prev = current->prev;
+                if (current->prev) {
+                    current->prev->next = next;
+                } else {
+                    listadd->head = next;
+                }
+
+                next->next = current;
+                current->prev = next;
+
+                if (!current->next) {
+                    listadd->tail = current;
+                }
+
+                swapped = 1;
+            } else {
+                current = current->next;
+            }
         }
-    }
+    } while (swapped);
 }
 
 void found(list *list){
@@ -203,6 +227,8 @@ void found(list *list){
     for(i = 0;i < count(list);i++){
         if(((Base*)getItem(list,i))->summarPower >= min && ((Base *)getItem(list,i))->summarPower <= max){
             printf("Item: %p\tNext: %p\tPrev: %p\n", getItem(list,i), getItem(list,i)->next, getItem(list,i)->prev);
+            print(((Base *)getItem(list,i)));
+
         }
     }
 }

@@ -8,115 +8,101 @@ public:
     void Print();
 };
 
-void DebugList::Menu() {
-    std::cout << "Menu:\n";
-    std::cout << "1.Add Item\n";
-    std::cout << "2.List Output\n";
-    std::cout << "3.Count Items\n";
-    std::cout << "4.Get Item by index\n";
-    std::cout << "5.Remove Item\n";
-    std::cout << "6.delete Item\n";
-    std::cout << "7.Clear List\n";
-    std::cout << "8.insert Item\n";
-    std::cout << "0.Close program\n";
-
-}
-
-void DebugList::Print() {
-    Item* item = Head();
-    int index = 0;
-        std::cout << "id\tAddress\tPrev\tNext\n";
-        while (item) {
-            std::cout << index << '\t' 
-                      << item << '\t' 
-                      << item->Prev() << '\t' 
-                      << item->Next() << '\n';
-            item = item->Next();
-            index++;
-        }
-}
-
 int main(){
-    DebugList list;
+    subjList list;
     int choice,amount = 0;
     base *bas = NULL;
     bool p = true;
     while (p){
-        list.Menu();
+        list.menu();
         std::cin >> choice;
         switch(choice){
             case 0:
-                std::cout << "EXIT....\n";
+                list.clear();
                 p = false;
                 break;
             case 1:{
-                int t = rand() % 5;
+                int t = 1 + rand() % 4;
                 switch(t){
-                    case(0):
-                        break;
                     case(1):{
-                        std::cout << t << std::endl;
-                        bas = new base(itemType::itSingleIndicator);
-                        std::cout << t << std::endl;
-                        bas->inputrand();
-                        std::cout << t << std::endl;
+                        singleIndicator *newsing = new singleIndicator();
+                        newsing->inputrand();
+                        newsing->print();
+                        list.add(newsing);
                         break;
                     }
                     case(2):{
-                        bas = new base(itemType::itTwoColorIndicator);
-                        bas->inputrand();
+                        twoCOlorIndicator *newtci = new twoCOlorIndicator();
+                        newtci->inputrand();
+                        newtci->print();
+                        list.add(newtci);
                         break;
                     }
                     case(3):{
-                        bas = new base(itemType::itSignIndicator);
-                        bas->inputrand();
+                        signIndicator *newsignI = new signIndicator();
+                        newsignI->inputrand();
+                        newsignI->print();
+                        list.add(newsignI);
                         break;
                     }
                     case(4):{
-                        bas = new base(itemType::itMatrixIndicator);
-                        bas->inputrand();
+                        matrixIndicator *newmatrix = new matrixIndicator();
+                        newmatrix->inputrand();
+                        newmatrix->print();
+                        list.add(newmatrix);
                         break;
                     }
                 }
-                if(t != 0){
-                    bas->print();
-                    Item *itemadd = static_cast<Item *>(bas);
-                    list.add(itemadd);
-                    bas->print();
-                }
                 break;
             }
-            case 2:
-                list.Print();
+            case 2:{
+                int v = 0;
+                switch(v){
+                    case 1:{
+                    singleIndicator *newSingle = new singleIndicator();
+                    newSingle->input();
+                    list.add(newSingle);
+                    std::cout << "Completle added new Singl Indicator!" << std::endl;
+                    break;
+                    }
+                    case 2:{
+                        twoCOlorIndicator *newtwoColor = new twoCOlorIndicator();
+                        newtwoColor->input();
+                        list.add(newtwoColor);
+                        std::cout << "Completle added new Two Color Indicator!" << std::endl;
+                        break;
+                    }
+                    case 3:{
+                        signIndicator *newSign = new signIndicator();
+                        newSign->input();
+                        list.add(newSign);
+                        std::cout << "Completle added new Sign Ingicator!" << std::endl;
+                        break;
+                    }
+                    case 4:{
+                        matrixIndicator *newMatrix = new matrixIndicator();
+                        newMatrix->input();
+                        list.add(newMatrix);
+                        std::cout << "Completle added new Matrix Indicator!" << std::endl;
+                        break;
+                    }
+                }
+            }
                 break;
             case 3:
-                amount = list.count();
-                printf("Amount Items:%d \n",amount);
+                list.printList();
                 break;
-            case 4:{
-                std::cout <<"Choose Index of Item:"<< std::endl;
-                std::cin >> choice;
-                Item* item = list.getItem(choice);
-                std::cout << "Item" << item << "| prev " << item->Prev() << "| next" << item->Next() << "\n" << std::endl;
+            case 4:
+                list.sortList();
+                list.printList();
                 break;
-            }
-            case 5:{
-                std::cout << "Choose Index to Remove:";
-                std::cin >> choice;
-                list.removeItem(choice);
-                std::cout << "Completle removed\n";
+            case 5:
+                list.found();
                 break;
-            }
             case 6:
                 list.clear();
-                std::cout << "List Deleted";
-                break;
-            case 7:
-                std::cout << "Choose Index to Insert:";
-                std::cin >> choice;
-                list.insert(new Item(),choice);
-                break;
+                break;   
+            }
         }
-    }
     return 0;
 }

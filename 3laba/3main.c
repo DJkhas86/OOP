@@ -19,6 +19,7 @@ int main(){
         printf("6.Delete Item \n");
         printf("7.Clear List \n");
         printf("8.insert Item \n");
+        printf("9.SUBJ FUNCTIONS\n");
         printf("0.Close program\n");
         scanf("%d",&choise);
         switch (choise) {
@@ -27,7 +28,7 @@ int main(){
                 
                 break;
             case 1:{
-                int t = rand() % 5;
+                int t = 1 + rand() % 4;
                 switch(t){
                     case(0):
                         break;
@@ -127,6 +128,22 @@ int main(){
                         scanf("%d",&poisk);
                         insert(listAddress,(item*)bas,poisk);
                     }
+                break;
+            }
+            case 9:{
+                int v = 0;
+                printf("Choose function\n");
+                printf("1.sortlist\n");
+                printf("2.found\n");
+                scanf("%d",&v);
+                switch(v){
+                    case 1:
+                        sortList(listAddress);
+                        break;
+                    case 2:
+                        found(listAddress);
+                        break;
+                }
                 break;
             }
         }    
