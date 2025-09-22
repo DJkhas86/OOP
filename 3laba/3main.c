@@ -5,6 +5,7 @@ int main(){
     int p = 1, choise = 0,poisk = 0,amount = 0;
     list *listAddress= malloc(sizeof(item));
     item *items = NULL;
+    Base *bas = NULL;
     item *functionTest = malloc(sizeof(item));
     listAddress->head = NULL;
     listAddress->tail = NULL;
@@ -25,17 +26,40 @@ int main(){
                 p = 0;
                 
                 break;
-            case 1:
-                if(!createItem(&items)){
-                    add(listAddress,items);
-                    printf("Item %p added\n",items);
+            case 1:{
+                int t = rand() % 5;
+                switch(t){
+                    case(0):
+                        break;
+                    case(1):{
+                        bas = createObject(itSingleIndicator);
+                        inputrand(bas);
+                        break;
+                    }
+                    case(2):{
+                        bas = createObject(itTwoColorIndicator);
+                        inputrand(bas);
+                        break;
+                    }
+                    case(3):{
+                        bas = createObject(itSignIndicator);
+                        inputrand(bas);
+                        break;
+                    }
+                    case(4):{
+                        bas = createObject(itMatrixIndicator);
+                        inputrand(bas);
+                        break;
+                    }
                 }
-                else{
-                    printf("Memory allocation error! Please try again\n");
+                if(t != 0){
+                    add(listAddress,(item *)bas);
+                    print(bas);
                 }
                 break;
+            }
             case 2:
-                listout(listAddress);
+                printList(listAddress);
                 break;
             case 3:
                 amount = count(listAddress);
@@ -45,7 +69,7 @@ int main(){
                 printf("Choose Index of Item:");
                 scanf("%d",&poisk);
                 functionTest = getItem(listAddress,poisk);
-                printf("Item: %p\tNext: %p\tPrev: %p\n", functionTest, functionTest->next, functionTest->prev);
+                print((Base *)functionTest);
                 break;
             case 5:
                 printf("Choose Index to Remove:");
@@ -72,18 +96,45 @@ int main(){
                     printf("ERROR:List is empty\n");
                 }
                 break;
-            case 8:
-                if(!createItem(&items)){
-                    printf("Choose Index to Insert:");
-                    scanf("%d",&poisk);
-                    insert(listAddress,items,poisk);
-                }
+            case 8:{
+                int t = rand() % 5;
+                switch(t){
+                    case(0):
+                        break;
+                    case(1):{
+                        bas = createObject(itSingleIndicator);
+                        inputrand(bas);
+                        break;
+                    }
+                    case(2):{
+                        bas = createObject(itTwoColorIndicator);
+                        inputrand(bas);
+                        break;
+                    }
+                    case(3):{
+                        bas = createObject(itSignIndicator);
+                        inputrand(bas);
+                        break;
+                    }
+                    case(4):{
+                        bas = createObject(itMatrixIndicator);
+                        inputrand(bas);
+                        break;
+                    }
+                }    
+                if(bas){
+                        printf("Choose Index to Insert:");
+                        scanf("%d",&poisk);
+                        insert(listAddress,(item*)bas,poisk);
+                    }
                 break;
             }
+        }    
     }
     free(listAddress);
     free(items);
     free(functionTest);
+    free(bas);
     system("pause");
     return 0;
 }

@@ -1,7 +1,7 @@
 #include "subj.hpp"
 #include <iostream>
 #include <limits>
-#include <cstring>
+
 
 using namespace std;
 
@@ -102,6 +102,76 @@ void matrixIndicator::input(){
     strings = SafeInputInt("Enter strings : ",0,10);
     column = SafeInputInt("Enter column : ",0,10);
     summarPower = summarPower *(column * strings);
+}
+
+void base::inputrand(){
+    switch (type) {
+        case itemType::itSingleIndicator:
+            static_cast<singleIndicator*>(this)->inputrand();
+            break;
+        case itemType::itTwoColorIndicator:
+            static_cast<twoCOlorIndicator*>(this)->inputrand();
+            break;
+        case itemType::itSignIndicator:
+            static_cast<signIndicator*>(this)->inputrand();
+            break;
+        case itemType::itMatrixIndicator:
+            static_cast<matrixIndicator*>(this)->inputrand();
+            break;
+        default:
+            cout << "Undefined type of object!" << endl;
+    }
+
+}
+void singleIndicator::inputrand(){
+    name = to_string(rand() % 11);
+    voltageDrop = rand()%101;
+    currentLimit = rand()%101;
+    waveLength = rand()%101;
+    radiationPower = rand()%101;
+    summarPower = currentLimit * radiationPower;
+    figure = to_string(rand() % 3);
+    radiatingArea = rand()%101;
+}
+
+void twoCOlorIndicator::inputrand(){
+    name = to_string(rand() % 11);
+    voltageDrop = rand()%101;
+    currentLimit = rand()%101;
+    waveLength = rand()%101;
+    radiationPower = rand()%101;
+    summarPower = currentLimit * radiationPower;
+    waveLength = rand()%101;
+    radPowOFsecondCrystal = rand()%101;
+}
+
+void signIndicator::inputrand(){
+    int buff;
+    name = to_string(rand() % 11);
+    voltageDrop = rand()%101;
+    currentLimit = rand()%101;
+    waveLength = rand()%101;
+    radiationPower = rand()%101;
+    summarPower = currentLimit * radiationPower;
+    buff = rand()%2;
+    amountSegments = rand()%101;
+    connectionDiagram =to_string(rand() % 5);
+    if(buff){  
+        signs = true;
+    }else{
+        signs = false;
+    }
+}
+
+void matrixIndicator::inputrand(){
+    name = to_string(rand() % 11);
+    voltageDrop = rand()%101;
+    currentLimit = rand()%101;
+    waveLength = rand()%101;
+    radiationPower = rand()%101;
+    summarPower = currentLimit * radiationPower;
+    strings = rand()%101;
+    column = rand()%101;
 }
 
 void base::print(){

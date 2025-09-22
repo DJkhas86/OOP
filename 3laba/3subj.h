@@ -56,6 +56,7 @@ typedef struct{
 Base* createObject(ItemType);
 void input(Base *obj);
 void print(Base *obj);
+void inputrand(Base *obj);
 
 void printList(list *list);
 void sortList(list *list);

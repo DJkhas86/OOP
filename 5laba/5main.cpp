@@ -15,8 +15,9 @@ void DebugList::Menu() {
     std::cout << "3.Count Items\n";
     std::cout << "4.Get Item by index\n";
     std::cout << "5.Remove Item\n";
-    std::cout << "6.Clear List\n";
-    std::cout << "7.insert Item\n";
+    std::cout << "6.delete Item\n";
+    std::cout << "7.Clear List\n";
+    std::cout << "8.insert Item\n";
     std::cout << "0.Close program\n";
 
 }
@@ -38,6 +39,7 @@ void DebugList::Print() {
 int main(){
     DebugList list;
     int choice,amount = 0;
+    base *bas = NULL;
     bool p = true;
     while (p){
         list.Menu();
@@ -47,10 +49,43 @@ int main(){
                 std::cout << "EXIT....\n";
                 p = false;
                 break;
-            case 1:
-                list.add(new Item());
-                std::cout << "Item Added \n" << std::endl;
+            case 1:{
+                int t = rand() % 5;
+                switch(t){
+                    case(0):
+                        break;
+                    case(1):{
+                        std::cout << t << std::endl;
+                        bas = new base(itemType::itSingleIndicator);
+                        std::cout << t << std::endl;
+                        bas->inputrand();
+                        std::cout << t << std::endl;
+                        break;
+                    }
+                    case(2):{
+                        bas = new base(itemType::itTwoColorIndicator);
+                        bas->inputrand();
+                        break;
+                    }
+                    case(3):{
+                        bas = new base(itemType::itSignIndicator);
+                        bas->inputrand();
+                        break;
+                    }
+                    case(4):{
+                        bas = new base(itemType::itMatrixIndicator);
+                        bas->inputrand();
+                        break;
+                    }
+                }
+                if(t != 0){
+                    bas->print();
+                    Item *itemadd = static_cast<Item *>(bas);
+                    list.add(itemadd);
+                    bas->print();
+                }
                 break;
+            }
             case 2:
                 list.Print();
                 break;

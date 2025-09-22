@@ -71,6 +71,45 @@ void input(Base *obj){
     }
 
 }
+void inputrand(Base *obj){
+    if (!obj) return;
+    snprintf(obj->name,sizeof(obj->name),"%d",rand() % 11);
+    obj->voltageDrop = rand()%101;
+    obj->currentLimit = rand()%101;
+    obj->waveLength = rand()%101;
+    obj->radiationPower = rand()%101;
+    obj->summarPower = obj->currentLimit * obj->radiationPower;
+    switch (obj->Item){
+        case itSingleIndicator: {
+            singleIndicator *si = (singleIndicator *)obj;
+            snprintf(si->figure,sizeof(si->figure),"%d",rand() % 3);
+            si->radiatingArea = rand()%101;
+            break;
+        }
+        case itTwoColorIndicator: {
+            twoCOlorIndicator *tci = (twoCOlorIndicator *)obj;
+            tci->waveLength = rand()%101;
+            tci->radPowOFsecondCrystal = rand()%101;
+            break;
+        }
+        case itSignIndicator: {
+            signIndicator *signI = (signIndicator *)obj;
+            signI->amountSegments = rand()%101;
+            signI->signs = rand()%3;
+            snprintf(signI->connectionDiagram,sizeof(signI->connectionDiagram),"%d",rand() % 5);
+            break;
+        }
+        case itMatrixIndicator: {
+            matrixIndicator *mi = (matrixIndicator *)obj;
+            mi->strings = rand()%101;
+            mi->column = rand()%101;
+            break;
+        }
+        default:
+            printf("undefined type!\n");
+    }
+
+}
 
 void print(Base *obj){
     if (!obj) return;
@@ -82,7 +121,8 @@ void print(Base *obj){
     printf("summar Power: %f\n", obj->summarPower);
     
     switch (obj->Item) {
-        case itSingleIndicator: {
+        case itSingleIndicator: 
+        {
             singleIndicator *si = (singleIndicator *)obj;
             printf("Figure: %s\n", si->figure);
             printf("Radiating Area: %d\n", si->radiatingArea);
@@ -90,7 +130,8 @@ void print(Base *obj){
         }
         case itTwoColorIndicator: {
             twoCOlorIndicator *tci = (twoCOlorIndicator *)obj;
-            printf("Тип воды: %f\n", tci->radPowOFsecondCrystal);
+            printf("radPowOFsecondCrystal %d\n", tci->radPowOFsecondCrystal);
+            printf("second wave length %d\n", tci->waveLength);
             break;
         }
         case itSignIndicator: {
@@ -107,7 +148,7 @@ void print(Base *obj){
             break;
         }
         default:
-            printf("Неизвестный тип!\n");
+            printf("Undefined type\n");
     }
 }
 
@@ -160,8 +201,7 @@ void found(list *list){
     printf("Enter Max edge");
     scanf("%d",&max);
     for(i = 0;i < count(list);i++){
-        if(((Base*)getItem(list,i))->summarPower >= min && 2
-        ((Base *)getItem(list,i))->summarPower <= max){
+        if(((Base*)getItem(list,i))->summarPower >= min && ((Base *)getItem(list,i))->summarPower <= max){
             printf("Item: %p\tNext: %p\tPrev: %p\n", getItem(list,i), getItem(list,i)->next, getItem(list,i)->prev);
         }
     }
@@ -179,7 +219,7 @@ int SafeInputInt(const char *prompt, int minValue, int maxValue) {
             if (sscanf(buffer, "%d", &value) == 1 && value >= minValue && value <= maxValue) {
                 isValid = 1;
             } else {
-                printf("Ошибка: Введите число в диапазоне [%d - %d]!\n", minValue, maxValue);
+                printf("ERRORR: print number in [%d - %d]!\n", minValue, maxValue);
             }
         }
     } while (!isValid);
@@ -198,7 +238,7 @@ float SafeInputFloat(const char *prompt) {
             if (sscanf(buffer, "%f", &value) == 1) {
                 isValid = 1;
             } else {
-                printf("Ошибка: Введите корректное число!\n");
+                printf("ERRRORRR: printf correct number\n");
             }
         }
     } while (!isValid);
@@ -221,7 +261,7 @@ void SafeInputString(const char *prompt, char *destination, int maxLength) {
                 strncpy(destination, buffer, maxLength);
                 isValid = 1;
             } else {
-                printf("Ошибка: Максимальная длина строки — %d символов. Попробуйте снова.\n", maxLength);
+                printf("ERRRORRR - max string length - %d.\n", maxLength);
             }
         }
     } while (!isValid);
