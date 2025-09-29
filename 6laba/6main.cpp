@@ -6,48 +6,43 @@ int main(){
     subjList list;
     int choice,amount = 0;
     bool p = true;
+    Base *pointer = NULL; 
     while (p){
         std::cout << "Menu:\n";
-        std::cout << "1.Add Single Indicator\n";
-        std::cout << "2.add Two Color Indicator\n";
-        std::cout << "3.add Sign Indicator\n";
-        std::cout << "4.add Matrix Indicator\n";
-        std::cout << "5.Print all\n";
-        std::cout << "6.Sort by wave length\n";
-        std::cout << "7.Found by summar power\n";
-        std::cout << "8.delete all\n";
-        std::cout << "0.EXIT\n";
+        std::cout << "1.Add random Item\n";
+        std::cout << "2.Add control Item\n";
+        std::cout << "3.Print all\n";
+        std::cout << "4.Sort by wave length\n";
+        std::cout << "5.Found by summar power\n";
+        std::cout << "6.delete all\n";
+        std::cout << "0.Close program\n";
         std::cin >> choice;
         switch(choice){
             case(1):{
             int t = 1 + rand() % 4;
             switch(t){
                 case(1):{
-                    singleIndicator *newsing = new singleIndicator();
-                    newsing->inputrand();
-                    newsing->print();
-                    list.add(newsing);
+                    pointer = Base::create(itemType::itSingleIndicator);
+                    pointer->print();
+                    list.add(pointer);
                     break;
                 }
                 case(2):{
-                        twoCOlorIndicator *newtci = new twoCOlorIndicator();
-                        newtci->inputrand();
-                        newtci->print();
-                        list.add(newtci);
+                        pointer = Base::create(itemType::itTwoColorIndicator);
+                        pointer->print();
+                        list.add(pointer);
                         break;
                     }
                     case(3):{
-                        signIndicator *newsignI = new signIndicator();
-                        newsignI->inputrand();
-                        newsignI->print();
-                        list.add(newsignI);
+                        pointer = Base::create(itemType::itSignIndicator);
+                        pointer->print();
+                        list.add(pointer);
                         break;
                     }
                     case(4):{
-                        matrixIndicator *newmatrix = new matrixIndicator();
-                        newmatrix->inputrand();
-                        newmatrix->print();
-                        list.add(newmatrix);
+                        pointer = Base::create(itemType::itMatrixIndicator);
+                        pointer->print();
+                        list.add(pointer);
                         break;
                     }
                 }

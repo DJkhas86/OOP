@@ -34,7 +34,30 @@ matrixIndicator::matrixIndicator(){
     strings = 0;
     column = 0;
 }
-
+Base* Base::create(itemType t){
+    switch(t){
+        case(itemType::itSingleIndicator):{
+            singleIndicator *newsing = new singleIndicator();
+            newsing->inputrand();
+            return newsing;
+        }
+        case(itemType::itTwoColorIndicator):{
+            twoCOlorIndicator *newtci = new twoCOlorIndicator();
+            newtci->inputrand();
+            return newtci;
+        }
+        case(itemType::itSignIndicator):{
+            signIndicator *nesi = new signIndicator();
+            nesi->inputrand();
+            return nesi;
+        }
+        case(itemType::itMatrixIndicator):{
+            matrixIndicator *newmat = new matrixIndicator();
+            newmat->inputrand();
+            return newmat;
+        }
+    }
+}
 void singleIndicator::input(){
     SafeInputString("Enter name: ", &name,4);
     voltageDrop = SafeInputFloat("Enter Voltage Drop: ");

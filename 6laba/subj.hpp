@@ -22,7 +22,7 @@ class Base : public Item{
 
         Base();
         virtual ~Base() = default;
-
+        static Base* create(itemType t);
         virtual void inputrand() = 0;
         virtual void input() = 0;
         virtual void print() const = 0;

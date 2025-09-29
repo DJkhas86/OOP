@@ -52,7 +52,7 @@ Item* List::getItem(int n){
     Item *temp = head;
     int i = 0;
     while(temp && i < n){
-        head = head->next;
+        temp = temp->next;
         i++;
     }
     return temp;
