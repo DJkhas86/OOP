@@ -23,6 +23,8 @@ void listout(list *listAddress);
 
 item* getItem(list *listAddress,int n);
 
+item* getIndex(item *itemadd,list *listadd)
+
 item* removeItem(list *listAddress,int n);
 
 void Delete(list *listadd,int n);

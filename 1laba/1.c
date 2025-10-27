@@ -78,6 +78,23 @@ item* getItem(list *listAddress,int n){
     return items;
 }
 
+item* getIndex(item *itemadd,list *listadd){
+    int i = 0;
+    int f = 0;
+    item *current = listadd->head;
+    while(current != itemadd){
+        i++;
+        current = current->next;
+        f = 1;
+    }
+    if (f == 1){
+        return current;
+    }
+    else{
+        return 0;
+    }
+}
+
 item* removeItem(list *listAddress,int n){
     item *itemFound = NULL;
     if(listAddress){
@@ -165,6 +182,7 @@ int main(){
         printf("6.Delete Item \n");
         printf("7.Clear List \n");
         printf("8.insert Item \n");
+        printf("9.get index \n");
         printf("0.Close program\n");
         scanf("%d",&choise);
         switch (choise) {
@@ -226,7 +244,11 @@ int main(){
                     scanf("%d",&poisk);
                     insert(listAddress,items,poisk);
                 }
-                break;    
+                break;
+            case 9:
+                functionTest = getIndex(getItem(listAddress,2),listAddress);
+                printf("Item: %p\tNext: %p\tPrev: %p\n", functionTest, functionTest->next, functionTest->prev);
+                break;        
             }
     }
     free(listAddress);

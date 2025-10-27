@@ -20,6 +20,7 @@ int main(){
         printf("7.Clear List \n");
         printf("8.insert Item \n");
         printf("9.SUBJ FUNCTIONS\n");
+        printf("10.SUBJ FUNCTIONS\n");
         printf("0.Close program\n");
         scanf("%d",&choise);
         switch (choise) {
@@ -146,6 +147,10 @@ int main(){
                 }
                 break;
             }
+            case 10:
+                functionTest = getIndex(getItem(listAddress,2),listAddress);
+                printf("Item: %p\tNext: %p\tPrev: %p\n", functionTest, functionTest->next, functionTest->prev);
+                break;
         }    
     }
     free(listAddress);
